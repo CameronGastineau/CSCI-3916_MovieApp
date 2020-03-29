@@ -3,15 +3,20 @@ import { connect } from 'react-redux'
 import Login from './login';
 import Register from './register';
 import { logoutUser } from '../actions/authActions';
+import {Redirect} from "react-router-dom";
 
 class Authentication extends Component {
 
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
 
         this.state = {
             toggleReg: false
         };
+
+        this.showLogin = this.showLogin.bind(this);
+        this.showReg = this.showReg.bind(this);
+        this.logout = this.logout.bind(this);
     }
 
     componentDidMount(){
@@ -38,11 +43,23 @@ class Authentication extends Component {
 
         const userNotLoggedIn = (
             <div>
-                <button onClick={this.showLogin.bind(this)}>Login</button><button onClick={this.showReg.bind(this)}>Register</button>
-                { this.state.toggleReg ? <Register /> : <Login /> }
+                <br></br>
+                <button onClick={this.showLogin}>Login</button>
+                <button onClick={this.showReg}>Register</button>
+                <br></br>
+                <br></br>
+                { this.state.toggleReg ? <Register/> : <Login/> }
             </div>
         );
-        const userLoggedIn = (<div>Logged in as: {this.props.username} <button onClick={this.logout.bind(this)}>Logout</button></div>);
+
+        const userLoggedIn = (
+            <div>
+                <Redirect to={{
+                    pathname: '/movielist',
+                    state: {from: this.props.location}
+                }}/>
+            </div>
+        );
 
         return (
             <div>

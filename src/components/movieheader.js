@@ -32,9 +32,9 @@ class MovieHeader extends Component {
                         </LinkContainer>
                     </Nav>
                 </Navbar>
-                <header className="App-header">
-                    <h1 className="App-title">{(this.props.selectedMovie ? this.props.selectedMovie.title : '')}</h1>
-                </header>
+                {/*<header className="App-header">*/}
+                {/*    <h1 className="App-title">{(this.props.selectedMovie ? this.props.selectedMovie.title : '')}</h1>*/}
+                {/*</header>*/}
             </div>
 
         );
@@ -45,8 +45,8 @@ const mapStateToProps = state => {
     return {
         loggedIn: state.auth.loggedIn,
         username: state.auth.username,
-        selectedMovie: ''//state.movie.selectedMovie,
+        selectedMovie: state.movie.selectedMovie,
     }
-}
+};
 
 export default withRouter(connect(mapStateToProps)(MovieHeader));

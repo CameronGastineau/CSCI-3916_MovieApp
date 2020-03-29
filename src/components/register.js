@@ -5,8 +5,8 @@ import { Col, Form, FormGroup, FormControl, ControlLabel, Button } from 'react-b
 
 class Register extends Component {
 
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
 
         this.updateDetails = this.updateDetails.bind(this);
         this.register = this.register.bind(this);
@@ -40,7 +40,7 @@ class Register extends Component {
                     <Col componentClass={ControlLabel} sm={2}>
                         Name
                     </Col>
-                    <Col sm={10}>
+                    <Col sm={9}>
                         <FormControl onChange={this.updateDetails} value={this.state.details.name} type="text" placeholder="Name" />
                     </Col>
                 </FormGroup>
@@ -49,8 +49,8 @@ class Register extends Component {
                     <Col componentClass={ControlLabel} sm={2}>
                         Email
                     </Col>
-                    <Col sm={10}>
-                        <FormControl onChange={this.updateDetails} value={this.state.details.username} type="text" placeholder="Username" />
+                    <Col sm={9}>
+                        <FormControl onChange={this.updateDetails} value={this.state.details.username} type="email" placeholder="Email" />
                     </Col>
                 </FormGroup>
 
@@ -58,13 +58,13 @@ class Register extends Component {
                     <Col componentClass={ControlLabel} sm={2}>
                         Password
                     </Col>
-                    <Col sm={10}>
+                    <Col sm={9}>
                         <FormControl onChange={this.updateDetails} value={this.state.details.password} type="password" placeholder="Password" />
                     </Col>
                 </FormGroup>
 
                 <FormGroup>
-                    <Col smOffset={2} sm={10}>
+                    <Col sm={20}>
                         <Button onClick={this.register}>Register</Button>
                     </Col>
                 </FormGroup>

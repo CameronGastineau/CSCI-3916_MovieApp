@@ -3,7 +3,7 @@ import constants from '../constants/actionTypes'
 var initialState = {
     loggedIn: localStorage.getItem('token') ? true : false,
     username: localStorage.getItem('username') ? localStorage.getItem('username') : ''
-}
+};
 
 export default (state = initialState, action) => {
 
