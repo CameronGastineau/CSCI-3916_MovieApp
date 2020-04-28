@@ -1,4 +1,4 @@
-import constants from '../constants/actionTypes'
+import {authActionTypes as authConstants} from '../constants'
 
 var initialState = {
     loggedIn: localStorage.getItem('token') ? true : false,
@@ -10,12 +10,12 @@ export default (state = initialState, action) => {
     var updated = Object.assign({}, state);
 
     switch(action.type) {
-        case constants.USER_LOGGEDIN:
+        case authConstants.USER_LOGGEDIN:
             updated['loggedIn'] = true;
             updated['username'] = action.username;
             return updated;
 
-        case constants.USER_LOGOUT:
+        case authConstants.USER_LOGOUT:
             updated['loggedIn'] = false;
             updated['username'] = '';
             return updated;

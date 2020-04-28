@@ -1,4 +1,4 @@
-import actionTypes from '../constants/actionTypes';
+import {authActionTypes as actionTypes} from '../constants';
 import runtimeEnv from '@mars/heroku-js-runtime-env';
 
 function userLoggedIn(username){

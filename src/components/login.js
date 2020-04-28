@@ -9,27 +9,19 @@ class Login extends Component {
         super(props);
         this.updateDetails = this.updateDetails.bind(this);
         this.login = this.login.bind(this);
-
-        this.state = {
-            details:{
-                username: '',
-                password: ''
-            }
-        };
     }
 
     updateDetails(event){
-        let updateDetails = Object.assign({}, this.state.details);
+        let updateDetails = Object.assign({}, this.props.userDetails);
 
         updateDetails[event.target.id] = event.target.value;
-        this.setState({
-            details: updateDetails
-        });
+
+        this.props.updateUserDetails(updateDetails)
     }
 
     login() {
         const {dispatch} = this.props;
-        dispatch(submitLogin(this.state.details));
+        dispatch(submitLogin(this.props.userDetails));
     }
 
     render(){
@@ -40,7 +32,7 @@ class Login extends Component {
                         Email
                     </Col>
                     <Col sm={9}>
-                        <FormControl onChange={this.updateDetails} value={this.state.details.username} type="email" placeholder="Email" />
+                        <FormControl onChange={this.updateDetails} value={this.props.userDetails.username} type="email" placeholder="Email" />
                     </Col>
                 </FormGroup>
 
@@ -49,7 +41,7 @@ class Login extends Component {
                         Password
                     </Col>
                     <Col sm={9}>
-                        <FormControl onChange={this.updateDetails} value={this.state.details.password} type="password" placeholder="Password" />
+                        <FormControl onChange={this.updateDetails} value={this.props.userDetails.password} type="password" placeholder="Password" />
                     </Col>
                 </FormGroup>
 

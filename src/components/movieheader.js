@@ -14,7 +14,7 @@ class MovieHeader extends Component {
     render() {
         return (
             <div>
-                <Navbar>
+                <Navbar  bg={"dark"} expand={"lg"} variant={"dark"}>>
                     <Navbar.Header>
                         <Navbar.Brand>
                             Movie App
@@ -32,9 +32,11 @@ class MovieHeader extends Component {
                         </LinkContainer>
                     </Nav>
                 </Navbar>
-                {/*<header className="App-header">*/}
-                {/*    <h1 className="App-title">{(this.props.selectedMovie ? this.props.selectedMovie.title : '')}</h1>*/}
-                {/*</header>*/}
+                <header className="App-header">
+                    <h1 className="App-title">{(this.props.selectedMovie ? this.props.selectedMovie.title : '')}</h1>
+                    <p className="App-intro">{(this.props.selectedMovie && this.props.selectedMovie.genre ? `Genre: ${this.props.selectedMovie.genre}` : '')}</p>
+                    <p className="App-intro">{(this.props.selectedMovie && this.props.selectedMovie.yearReleased ? `Year Released: ${this.props.selectedMovie.yearReleased}` : '')}</p>
+                </header>
             </div>
 
         );

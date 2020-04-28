@@ -2,7 +2,7 @@ import React, { Component} from 'react';
 import { connect } from 'react-redux'
 import Login from './login';
 import Register from './register';
-import { logoutUser } from '../actions/authActions';
+import {logoutUser, submitLogin, submitRegister} from '../actions/authActions';
 import {Redirect} from "react-router-dom";
 
 class Authentication extends Component {
@@ -11,16 +11,17 @@ class Authentication extends Component {
         super(props);
 
         this.state = {
-            toggleReg: false
+            toggleReg: false,
+            userDetails:{
+                name: '',
+                username: '',
+                password: ''
+            }
         };
 
         this.showLogin = this.showLogin.bind(this);
         this.showReg = this.showReg.bind(this);
         this.logout = this.logout.bind(this);
-    }
-
-    componentDidMount(){
-
     }
 
     showLogin(){
@@ -39,6 +40,20 @@ class Authentication extends Component {
         this.props.dispatch(logoutUser());
     }
 
+    login(){
+        this.props.dispatch(submitLogin(this.state.userDetails))
+    }
+
+    register(){
+        this.props.dispatch(submitRegister(this.state.userDetails))
+    }
+
+    updateUserDetails = (props) => {
+        this.setState(state => ({
+            userDetails: props
+        }))
+    }
+
     render(){
 
         const userNotLoggedIn = (
@@ -48,7 +63,10 @@ class Authentication extends Component {
                 <button onClick={this.showReg}>Register</button>
                 <br></br>
                 <br></br>
-                { this.state.toggleReg ? <Register/> : <Login/> }
+                { this.state.toggleReg
+                    ? <Register userDetails={this.state.userDetails} updateUserDetails={this.updateUserDetails}/>
+                    : <Login userDetails={this.state.userDetails} updateUserDetails={this.updateUserDetails}/>
+                }
             </div>
         );
 

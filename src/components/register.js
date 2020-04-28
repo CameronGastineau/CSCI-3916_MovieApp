@@ -10,27 +10,19 @@ class Register extends Component {
 
         this.updateDetails = this.updateDetails.bind(this);
         this.register = this.register.bind(this);
-        this.state = {
-            details:{
-                name: '',
-                username: '',
-                password: ''
-            }
-        };
     }
 
     updateDetails(event){
-        let updateDetails = Object.assign({}, this.state.details);
+        let updateDetails = Object.assign({}, this.props.userDetails);
 
         updateDetails[event.target.id] = event.target.value;
-        this.setState({
-            details: updateDetails
-        });
+
+        this.props.updateUserDetails(updateDetails)
     }
 
     register(){
         const {dispatch} = this.props;
-        dispatch(submitRegister(this.state.details));
+        dispatch(submitRegister(this.props.userDetails));
     }
 
     render(){
@@ -41,7 +33,7 @@ class Register extends Component {
                         Name
                     </Col>
                     <Col sm={9}>
-                        <FormControl onChange={this.updateDetails} value={this.state.details.name} type="text" placeholder="Name" />
+                        <FormControl onChange={this.updateDetails} value={this.props.userDetails.name} type="text" placeholder='Name' />
                     </Col>
                 </FormGroup>
 
@@ -50,7 +42,7 @@ class Register extends Component {
                         Email
                     </Col>
                     <Col sm={9}>
-                        <FormControl onChange={this.updateDetails} value={this.state.details.username} type="email" placeholder="Email" />
+                        <FormControl onChange={this.updateDetails} value={this.props.userDetails.username} type="email" placeholder='Email' />
                     </Col>
                 </FormGroup>
 
@@ -59,7 +51,7 @@ class Register extends Component {
                         Password
                     </Col>
                     <Col sm={9}>
-                        <FormControl onChange={this.updateDetails} value={this.state.details.password} type="password" placeholder="Password" />
+                        <FormControl onChange={this.updateDetails} value={this.props.userDetails.password} type="password" placeholder="Password" />
                     </Col>
                 </FormGroup>
 

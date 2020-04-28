@@ -1,7 +1,6 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import reducers from '../reducers';
 import thunk from 'redux-thunk';
-import authReducer from "../reducers/authReducer";
-import movieReducer from '../reducers/movieReducer';
 const middlewares = [thunk];
 
 if (process.env.NODE_ENV === 'development') {
@@ -10,14 +9,14 @@ if (process.env.NODE_ENV === 'development') {
     middlewares.push(logger);
 }
 
-const store = createStore(
-    combineReducers( {
-        auth: authReducer,
-        movie: movieReducer
-    }),
-    applyMiddleware(
-        ...middlewares
-    )
-);
+const configureStore = ( initialState = {} ) => {
+    const enhancer = compose(
+        applyMiddleware(
+            ...middlewares
+        ));
+    return createStore(reducers, initialState, enhancer);
+};
+
+const store = configureStore({});
 
 export default store;
