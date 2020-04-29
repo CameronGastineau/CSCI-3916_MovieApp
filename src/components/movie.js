@@ -42,6 +42,9 @@ class Movie extends Component {
             updateDetails['_id'] = this.props.selectedMovieUserReview._id
         }
 
+        if (this.state.userReview.movieID === '')
+            updateDetails['movieID'] = this.props.selectedMovie._id;
+
         this.setState({
             userReview: updateDetails
         });
