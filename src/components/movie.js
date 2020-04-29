@@ -23,31 +23,24 @@ class Movie extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.updateUserReviewProperty = this.updateUserReviewProperty.bind(this);
         this.handleSubmitButtonClick = this.handleSubmitButtonClick.bind(this);
-        this.setReviewID = this.setReviewID.bind(this);
     }
 
     componentDidMount() {
         const {dispatch} = this.props;
         if (!this.props.selectedMovie)
             dispatch(fetchMovie(this.props.id));
-    }
 
-    setReviewID() {
-        //Find the current user's review, if it exists, and set state userReview to it. If nothing else, set movieID to current movie
-        if (this.props.selectedMovie !== null) {
-
-            let review = this.props.selectedMovie.reviews.find(review => review.userName === localStorage.getItem('username'));
-
-            if (review) {
-                this.updateUserReviewProperty("_id", review._id)
-            }
-        }
+        this.updateUserReviewProperty("movieID", this.props.id);
     }
 
     handleChange(event) {
         let updateDetails = Object.assign({}, this.state.userReview);
 
         updateDetails[event.target.id] = event.target.value;
+
+        if (this.props.selectedMovieUserReview !== undefined && this.state.userReview._id === null ) {
+            updateDetails['_id'] = this.props.selectedMovieUserReview._id
+        }
 
         this.setState({
             userReview: updateDetails
@@ -72,14 +65,6 @@ class Movie extends Component {
             return;
         }
 
-        this.setReviewID();
-
-        if (this.props.selectedMovie._id !== undefined && this.props.selectedMovie._id != null) {
-            this.updateUserReviewProperty('movieID', this.props.selectedMovie._id);
-        } else {
-            this.updateUserReviewProperty('movieID', this.props.id);
-        }
-
         if (this.state.userReview._id === undefined || this.state.userReview._id === null) {
             dispatch(createReview(this.state.userReview))
         } else {
@@ -95,7 +80,7 @@ class Movie extends Component {
         }
 
         return stars;
-    }
+    };
 
     render() {
         const Actor = ({actor, i}) => {
@@ -113,18 +98,11 @@ class Movie extends Component {
           if (!review) {
               return null;
           }
-
-          let stars = [];
-
-          for (let i = 0; i < review.rating; i++) {
-             stars.push(<Glyphicon glyph={'star'} key={i}/>);
-          }
-
           return(
               <blockquote className="blockquote mb-0" key={i}>
                   <p>
                       {' '}
-                      {stars}
+                      {this.getStars(review.rating)}
                       <br/>
                       {review.review}
                       {' '}
@@ -202,7 +180,7 @@ class Movie extends Component {
                     <br/>
                     <br/>
                     <FormGroup controlId={"rating"} align={"center"} hidden={this.props.selectedMovie === null || this.props.selectedMovie === undefined}>
-                        <p>Rating:</p>
+                        <p>Rating: {this.state.userReview.rating}</p>
                         <FormControl
                             onChange={this.handleChange}
                             style={{width:"25%"}}
@@ -239,6 +217,7 @@ const mapStateToProps = (state, ownProps) => {
     return {
         loggedIn: state.auth.loggedIn,
         selectedMovie: state.movie.selectedMovie,
+        selectedMovieUserReview: state.movie.selectedMovieUserReview,
         id: ownProps.match.params.id
     }
 };

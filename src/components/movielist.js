@@ -50,7 +50,7 @@ class MovieList extends Component {
             }
 
             return (
-                <Carousel onSelect={this.handleSelect} indicators={false} fade={"true"} height={500}>
+                <Carousel onSelect={this.handleSelect} indicators={false} height={500}>
                     {movieList.map((movie) =>
                         <Carousel.Item key={movie._id}>
                             <div>
